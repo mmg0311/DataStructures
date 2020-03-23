@@ -1,3 +1,6 @@
+/*
+        HACKERRANK QUESTION : QHEAP1
+*/
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -26,13 +29,13 @@ class heap{
         arr[i2] = temp;
       }   
       bool hasLeftChild(int ind){
-        if(getLeftChildIndex(ind) < size){
+        if(getLeftChildIndex(ind) < heap_ind){
           return true;
         }
         return false;
       }
       bool hasRightChild(int ind){
-        if(getRightChildIndex(ind) < size){
+        if(getRightChildIndex(ind) < heap_ind){
           return true;
         }
         return false;
@@ -50,6 +53,7 @@ class heap{
       bool removeTop();
       bool deleteElement(int data);
       bool deleteElementAtIndex(int index);
+      void printHeap();
 };
 
 int heap::getMinEle(){
@@ -64,14 +68,14 @@ bool heap::removeTop(){
     return  false;
   }
   arr[0] = arr[heap_ind-1];
+  //cout <<  "remove :" << arr[0] << "\n";
   heap_ind--;
   HeapifyDown();
   return true;
 }
 
 bool heap::insert(int data){
-   if(heap_ind > size){
-      //error  
+   if(heap_ind > size){ 
       return false;
    }
    arr[heap_ind] = data;
@@ -90,6 +94,7 @@ void heap::HeapifyUp(int ind){
 
 void heap::HeapifyDown(){
   int index = 0;
+  
   while(hasLeftChild(index) ){
     int small = getLeftChildIndex(index);
     if(hasRightChild(index) && arr[small] > arr[getRightChildIndex(index)]){
@@ -101,15 +106,17 @@ void heap::HeapifyDown(){
       break;
     }
     index = small;
+   // cout << "small : " << index << "\n";
+   // printHeap();
   }
+    
 }
 
 bool heap::deleteElementAtIndex(int index){
   if(index < heap_ind){
     arr[index] = INT_MIN;
     HeapifyUp(index);
-    removeTop();
-    return true;
+    return removeTop();
   }
   return false;
 }
@@ -117,19 +124,41 @@ bool heap::deleteElementAtIndex(int index){
 bool heap::deleteElement(int data){
     for(int i = 0; i < heap_ind ; i++){
       if(arr[i] == data){
-         return deleteElementAtIndex(i);
+        if(i == 0){
+            return removeTop();
+        }else{
+            return deleteElementAtIndex(i);
+        }
       }
     }
     return false;
 }
 
+void heap::printHeap(){
+    cout << "heap :" ;
+    for(int i = 0 ;i < heap_ind ; i++){
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
 int main(){
-    heap h(10);
-    h.insert(2);
-    h.insert(3);
-    h.insert(4);
-    h.insert(1);
-    cout << h.getMinEle();
-    h.deleteElement(1);
-    cout << h.getMinEle();
+    int q;
+    cin >> q;
+    heap h(q);
+    int q1,q2;
+    while(q--){
+        cin >> q1;
+        if(q1 == 3){
+            cout  <<  h.getMinEle() << "\n";
+        }else{
+            cin >> q2;
+            if(q1 == 1){
+                h.insert(q2);
+            }else{
+                 h.deleteElement(q2) ;
+            }
+        }
+        //h.printHeap();
+    }
 }

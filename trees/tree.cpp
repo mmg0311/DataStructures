@@ -159,6 +159,31 @@ void topView(Node *root)
 }
 
 //*******************************************
+
+//level order traversal
+void levelOrder(Node *root)
+{
+   queue<Node *> s;
+   s.emplace(root);
+   Node *t;
+   while (!s.empty())
+   {
+      t = s.front();
+      s.pop();
+      cout << t->data << " ";
+      if (t->left != NULL)
+      {
+         s.emplace(t->left);
+      }
+      if (t->right != NULL)
+      {
+         s.emplace(t->right);
+      }
+   }
+}
+
+//insert into binary search tree
+
 int main()
 {
 }

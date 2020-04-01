@@ -201,6 +201,16 @@ Node *insert(Node *root, int data)
    return root;
 }
 
+//for huffman
+typedef struct node
+{
+   int freq;
+   char data;
+   node *left;
+   node *right;
+
+} node;
+
 //find the string from huffman code
 void decode_huff(node *root, string s)
 {

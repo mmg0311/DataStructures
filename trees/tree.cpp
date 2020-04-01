@@ -183,6 +183,70 @@ void levelOrder(Node *root)
 }
 
 //insert into binary search tree
+Node *insert(Node *root, int data)
+{
+   if (root == NULL)
+   {
+      return new Node(data);
+   }
+   Node *t = root;
+   if (t->data > data)
+   {
+      t->left = insert(t->left, data);
+   }
+   else
+   {
+      t->right = insert(t->right, data);
+   }
+   return root;
+}
+
+//find the string from huffman code
+void decode_huff(node *root, string s)
+{
+   string ans = "";
+   node *t = root;
+   s += '#';
+   for (int i = 0; i < s.size(); i++)
+   {
+      char x = s[i];
+      //cout << x << endl;
+      if (x == '1')
+      {
+         if (t->right != NULL)
+         {
+            t = t->right;
+         }
+         else
+         {
+            ans += t->data;
+            t = root;
+            i--;
+            //cout << ans << endl;
+         }
+      }
+      else if (x == '0')
+      {
+         if (t->left != NULL)
+         {
+            t = t->left;
+         }
+         else
+         {
+            ans += t->data;
+            t = root;
+            i--;
+            //cout << ans << endl;
+         }
+      }
+      else
+      {
+         ans += t->data;
+      }
+   }
+   //cout << s << endl;
+   cout << ans << endl;
+}
 
 int main()
 {
